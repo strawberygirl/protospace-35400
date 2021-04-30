@@ -4,7 +4,7 @@ class PrototypesController < ApplicationController
   
 
   def index
-    @prototype = Prototype.all
+    @prototype = Prototype.includes(:user)
   end
 
   #def move_to_index
@@ -27,6 +27,7 @@ class PrototypesController < ApplicationController
   end
 
   def show
+    #@user = User.find(params[:id])
     @prototype = Prototype.find(params[:id])
     @comment = Comment.new
     @comments = @prototype.comments.includes(:user)
@@ -66,6 +67,6 @@ class PrototypesController < ApplicationController
   private
 
   def prototype_params
-    params.require(:prototype).permit(:title, :catch_copy, :concept, :image).merge(user_id: current_user.id)
+    params.require(:prototype).permit(:title, :catch_copy, :concept, :image).merge(user_id: current_user.id, prototype_id: params[:prototype_id])
   end
 end

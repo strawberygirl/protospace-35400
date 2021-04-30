@@ -1,4 +1,9 @@
 class CommentsController < ApplicationController
+  def index
+    @comment = Comment.new
+    @prototype = Prototype.find(params[:id])
+  end
+  
   def create
     @comment = Comment.new(comment_params)
     if @comment.save
